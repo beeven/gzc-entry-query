@@ -9,6 +9,9 @@
           <input type="text" ng-model="newEntry" />
         </label>
       </div>
+      <div class="status-text">
+          <h5 class="assertive">{{status}}</h5>
+      </div>
       <div class="padding">
         <button class="button button-block button-positive" ng-disabled="adding" ng-click="doAddEntry(newEntry)">Done</button>
         <button class="button button-block button-assertive" ng-Click="cancelAddEntry()">Cancel</button>

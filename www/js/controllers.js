@@ -31,9 +31,10 @@ angular.module('starter.controllers', [])
   $scope.shouldShowDelete = false;
   $scope.editButtonText = 'Edit';
   $scope.adding = false;
+
   $scope.toggleDelete = function(){
-    $scope.shouldShowDelete = !$scope.shouldShowDelete;
-    $scope.editButtonText = $scope.shouldShowDelete ? 'Done' : 'Edit';
+    $scope.editing = !$scope.editing;
+    $scope.editButtonText = $scope.editing ? 'Done' : 'Edit';
   }
   $scope.entries = Entries.all();
   $scope.doRefresh = function(){
@@ -48,9 +49,27 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   })
 
-  $scope.addEntry = function(){
-    $scope.modal.show();
+  $scope.secondaryClicked = function(){
+      if($scope.editing) { // bulk delete
+          var i=0;
+          for(i=0;i<$scope.entries.length;i++){
+              if($scope.entries[i].selected) {
+                  Entries.removeAt(i);
+                  i--;
+              }
+          }
+      } else { // add new entry
+          $scope.modal.show();
+      }
+  };
+
+  $scope.entryClicked = function(entry) {
+      if($scope.editing) {
+          $scope.toggleEntrySelected(entry);
+      }
+      console.log("entry clicked", entry);
   }
+
 
   $scope.doAddEntry = function(id){
     $scope.adding = true;
@@ -59,29 +78,37 @@ angular.module('starter.controllers', [])
       Entries.add(id)
         .then(function(){
           $scope.modal.hide();
-          console.log($scope.entries);
+          $scope.status = "";
       },function(err){
-
+          $scope.status = err.message;
       }).then(function(){
         $scope.adding = false;
       })
     } else {
 
     }
-  }
+};
 
   $scope.cancelAddEntry = function(){
     $scope.modal.hide();
-  }
+};
 
   $scope.$on('$destroy',function(){
     $scope.modal.remove();
-  })
+});
 
   $scope.reorderItem = function(entry, fromIndex, toIndex){
     $scope.entries.splice(fromIndex,1);
     $scope.entries.splice(toIndex,0,entry);
-  }
+};
+
+  $scope.toggleEntrySelected = function(entry){
+      if(typeof(entry.selected) === 'undefined' || entry.selected === null || entry.selected === false){
+          entry.selected = true;
+      } else {
+          entry.selected = false;
+      }
+  };
 })
 
 ;

@@ -61,6 +61,9 @@ angular.module('starter.services', [])
     remove: function(entry){
       entries.splice(entries.indexOf(entry),1);
     },
+    removeAt: function(index){
+        entries.splice(index,1);
+    },
     refresh: function(){
 
     },

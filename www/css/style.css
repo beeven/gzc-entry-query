@@ -1,1 +1,17 @@
 /* Empty. Add your own CSS if you like */
+.item-delete .item-edit.button.icon {
+    color: #387ef5;
+    padding-left: 10px;
+    padding-right: 10pxs;
+}
+.item-delete .item-edit.button.icon::before {
+    font-size:24px !important;
+}
+
+.bar-header .primary-buttons .button.button-clear {
+    font-weight: 400;
+}
+
+.modal .status-text {
+    text-align: center;
+}

@@ -2,25 +2,33 @@
   <ion-nav-buttons side="primary">
     <a class="button button-clear button-positive"
             ng-click="toggleDelete()">
-            <span style="font-weight: 400">{{editButtonText}}</span>
+            <span>{{editButtonText}}</span>
       </a>
   </ion-nav-buttons>
   <ion-nav-buttons side="secondary">
-    <button class="button button-clear button-positive icon ion-ios-plus-empty" ng-click="addEntry()">
+    <button class="button button-clear button-positive icon ion-ios-plus-empty"
+            ng-click="secondaryClicked()"
+            ng-class="{'ion-ios-plus-empty': !editing, 'ion-ios-trash-outline': editing}">
     </button>
   </ion-nav-buttons>
   <ion-content>
     <ion-refresher pulling-text="Pull to refresh..."
       on-refresh="doRefresh()"></ion-refresher>
-    <ion-list show-delete="shouldShowDelete"
-              show-reorder="shouldShowDelete"
+    <ion-list show-delete="editing"
+              show-reorder="editing"
               can-swipe=true>
       <ion-item ng-repeat="entry in entries">
         <h2>{{entry.id}}</h2>
         <p>{{entry.status}}</p>
-        <ion-option-button class="button-assertive" ng-click="entries.splice($index,1)">Delete</ion-option-button>
-        <ion-delete-button class="button-small ion-minus-circled" ng-click="entries.splice($index,1)"></ion-delete-button>
-        <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(entry,$fromIndex, $toIndex)"></ion-reorder-button>
+        <ion-option-button class="button-assertive"
+            ng-click="entries.splice($index,1)">Delete
+        </ion-option-button>
+        <ion-delete-button class="item-edit"
+            ng-click="toggleEntrySelected(entry)"
+            ng-class="{'ion-ios-circle-outline': !entry.selected, 'ion-ios-checkmark': entry.selected}">
+        </ion-delete-button>
+        <ion-reorder-button class="ion-navicon"
+            on-reorder="reorderItem(entry,$fromIndex, $toIndex)"></ion-reorder-button>
       </ion-item>
     </ion-list>
   </ion-content>
