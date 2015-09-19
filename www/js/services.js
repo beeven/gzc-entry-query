@@ -48,26 +48,50 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Entries',function($q){
-  entries = [
-    {id:"51410001234123",status:"等待申报"},
-    {id:"51123012300012",status:"等待放行"}
-  ]
+.factory('Entries',function($q, $resource, $http){
+    var storage;
+    if(window.localStorage !== null) {
+        storage = window.localStorage;
+    } else {
+        storage = {};
+    }
+
+    var entrylist = storage["entries"];
+    if(typeof(entrylist) === 'undefined' || entrylist === null) {
+        storage["entries"] = "";
+        entrylist = [];
+    } else {
+        entrylist = JSON.parse(entrylist);
+    }
+
+    var i=0,entries=[],entry;
+
+    for(i=0;i<entrylist.length;i++){
+        entry= localStorage[entrylist[i]];
+        if(typeof(entry) === 'undefined' || entry === null)
+            continue;
+        entries.push(JSON.parse(entry));
+    }
 
   return {
     all: function(){
       return entries;
     },
-    remove: function(entry){
-      entries.splice(entries.indexOf(entry),1);
-    },
     removeAt: function(index){
+        entrylist.splice(index,1);
+        storage["entries"] = JSON.stringify(entrylist);
         entries.splice(index,1);
     },
     refresh: function(){
 
     },
     add: function(id){
+        return $http.get("/api/entry/query/"+id).then(function(data){
+            var ret = JSON.parse(data);
+            if(ret.code == '200'){}
+        },function(err){
+
+        })
       return $q(function(resolve,reject){
         if(id == 1){
           setTimeout(function(){
