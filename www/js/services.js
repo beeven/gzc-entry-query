@@ -48,7 +48,7 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Entries',function($q, $resource, $http){
+.factory('Entries',function($q,$http){
     var storage;
     if(window.localStorage !== null) {
         storage = window.localStorage;
@@ -57,8 +57,8 @@ angular.module('starter.services', [])
     }
 
     var entrylist = storage["entries"];
-    if(typeof(entrylist) === 'undefined' || entrylist === null) {
-        storage["entries"] = "";
+    if(typeof(entrylist) === 'undefined' || entrylist === null || entrylist === "") {
+        storage["entries"] = "[]";
         entrylist = [];
     } else {
         entrylist = JSON.parse(entrylist);
@@ -67,7 +67,7 @@ angular.module('starter.services', [])
     var i=0,entries=[],entry;
 
     for(i=0;i<entrylist.length;i++){
-        entry= localStorage[entrylist[i]];
+        entry= localStorage["entry." + entrylist[i]];
         if(typeof(entry) === 'undefined' || entry === null)
             continue;
         entries.push(JSON.parse(entry));
@@ -75,6 +75,7 @@ angular.module('starter.services', [])
 
   return {
     all: function(){
+        //console.log(entrylist,entries);
       return entries;
     },
     removeAt: function(index){
@@ -83,28 +84,55 @@ angular.module('starter.services', [])
         entries.splice(index,1);
     },
     refresh: function(){
-
+        return $http.get("/api/entry/query/"+entrylist.join(","))
+                    .then(function(res){
+                        var ret = res.data;
+                        var i,e;
+                        for(i in ret.data) {
+                            e = ret.data[i];
+                        }
+                    })
+    },
+    reorder: function(fromIndex, toIndex){
+        var e = entries.splice(fromIndex,1);
+        entries.splice(toIndex,0,e[0]);
+        e = entrylist.splice(fromIndex,1);
+        entrylist.splice(toIndex,0,e[0]);
+        storage["entries"] = JSON.stringify(entrylist);
     },
     add: function(id){
-        return $http.get("/api/entry/query/"+id).then(function(data){
-            var ret = JSON.parse(data);
-            if(ret.code == '200'){}
+        return $q(function(resolve,reject){
+            $http.get("/api/entry/query/"+id).then(function(res){
+                console.log(res);
+            var ret = res.data;
+            var i,d,e;
+            if(ret.code == '200'){ // found 
+                for(i in ret.data){
+                    d = ret.data[i];
+                    e = {
+                        id: i,
+                        status: d.status,
+                        message: d.message,
+                        declare_date: d.declare_date,
+                        trade_name: d.trade_name
+                    };
+                    entries.push(e);
+                    entrylist.push(i);
+                    storage["entry."+i] = JSON.stringify(e);
+                }
+                storage["entries"] = JSON.stringify(entrylist);
+                resolve(e);
+            }
+            else if (ret.code == '404') { // not found
+                reject({message:"没有此报关单信息"});
+            }
+            else {
+                reject({message: ret.status});
+            }
         },function(err){
-
-        })
-      return $q(function(resolve,reject){
-        if(id == 1){
-          setTimeout(function(){
-            var newEntry = {id:"51234567882",status:"已放行"}
-            entries.push(newEntry);
-            resolve()
-          },1000);
-        } else {
-          setTimeout(function(){
-            reject({message:"没有此报关单信息"})
-          },1000);
-        }
-      });
+            reject({message:"无法联系服务器"});
+            console.log(err);
+        })});
     }
   }
 });

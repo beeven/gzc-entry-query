@@ -18,7 +18,12 @@ app.get("/api/entry/query/:ids",function(req,res){
    var ret = {}
    var i=0,id;
    for(i=0;i<idArray.length;i++){
+       
        id = idArray[i];
+       if(id == 1){
+           res.json({code:"404",data:{}});
+           return;
+       }
        ret[id] = {
                "trade_name":"福建奋安铝业有限公司",
                "status":"审核结束",

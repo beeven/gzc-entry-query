@@ -74,7 +74,7 @@ angular.module('starter.controllers', [])
   $scope.doAddEntry = function(id){
     $scope.adding = true;
     console.log("adding: ", id)
-    if(id != ''){
+    if(typeof(id)!=='undefined' && id !== null && id != ''){
       Entries.add(id)
         .then(function(){
           $scope.modal.hide();
@@ -85,7 +85,8 @@ angular.module('starter.controllers', [])
         $scope.adding = false;
       })
     } else {
-
+        $scope.adding = false;
+        $scope.cancelAddEntry();
     }
 };
 
@@ -97,10 +98,12 @@ angular.module('starter.controllers', [])
     $scope.modal.remove();
 });
 
-  $scope.reorderItem = function(entry, fromIndex, toIndex){
-    $scope.entries.splice(fromIndex,1);
-    $scope.entries.splice(toIndex,0,entry);
+  $scope.reorderItem = function(fromIndex, toIndex){
+      Entries.reorder(fromIndex, toIndex);
 };
+    $scope.removeEntry = function(index) {
+        Entries.removeAt(index);
+    };
 
   $scope.toggleEntrySelected = function(entry){
       if(typeof(entry.selected) === 'undefined' || entry.selected === null || entry.selected === false){

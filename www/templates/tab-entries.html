@@ -21,14 +21,14 @@
         <h2>{{entry.id}}</h2>
         <p>{{entry.status}}</p>
         <ion-option-button class="button-assertive"
-            ng-click="entries.splice($index,1)">Delete
+            ng-click="removeEntry($index)">Delete
         </ion-option-button>
         <ion-delete-button class="item-edit"
             ng-click="toggleEntrySelected(entry)"
             ng-class="{'ion-ios-circle-outline': !entry.selected, 'ion-ios-checkmark': entry.selected}">
         </ion-delete-button>
         <ion-reorder-button class="ion-navicon"
-            on-reorder="reorderItem(entry,$fromIndex, $toIndex)"></ion-reorder-button>
+            on-reorder="reorderItem($fromIndex, $toIndex)"></ion-reorder-button>
       </ion-item>
     </ion-list>
   </ion-content>
