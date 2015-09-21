@@ -1,0 +1,19 @@
+<ion-view view-title="个人税单">
+  <ion-nav-buttons side="primary">
+    <a class="button button-clear button-positive"
+            ng-click="toggleDelete()">
+            <span>{{editButtonText}}</span>
+      </a>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-clear button-positive icon ion-ios-plus-empty"
+            ng-click="secondaryClicked()"
+            ng-class="{'ion-ios-plus-empty': !editing, 'ion-ios-trash-outline': editing}">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-refresher pulling-text="下拉以更新列表..."
+      on-refresh="doRefresh()"></ion-refresher>
+
+  </ion-content>
+</ion-view>

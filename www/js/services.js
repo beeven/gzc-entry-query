@@ -48,6 +48,27 @@ angular.module('starter.services', [])
     }
   };
 })
+.factory("Posts",function($q,$http){
+  var posts = [{
+    id: "55123559120",
+    i_e_flag: "进口",
+    country: "US",
+    lastUpdated: new Date(),
+    tax: "￥10.50",
+    message: "已放行",
+  },{
+    id: "5BX23559LL20",
+    message: "无此邮件信息"
+  },{
+    id: "55GSS123559120",
+    message: "无此邮件信息"
+  }];
+  return {
+    all: function(){
+      return posts;
+    }
+  }
+})
 .factory('Entries',function($q,$http){
     var storage;
     if(window.localStorage !== null) {

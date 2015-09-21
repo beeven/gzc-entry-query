@@ -24,3 +24,8 @@
 .item-icon-right span.icon i.icon{
   position: relative;
 }
+
+.logo img {
+  width: 100%;
+  position: relative;
+}

@@ -1,0 +1,41 @@
+<ion-view view-title="邮递物品">
+  <ion-nav-buttons side="primary">
+    <a class="button button-clear button-positive"
+            ng-click="toggleDelete()">
+            <span>{{editButtonText}}</span>
+      </a>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-clear button-positive icon ion-ios-plus-empty"
+            ng-click="secondaryClicked()"
+            ng-class="{'ion-ios-plus-empty': !editing, 'ion-ios-trash-outline': editing}">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-refresher pulling-text="下拉以更新列表..."
+      on-refresh="doRefresh()"></ion-refresher>
+    <ion-list show-delete="editing"
+              show-reorder="editing"
+              can-swipe=true>
+      <ion-item class="item-remove-animate item-icon-right"
+                ng-repeat="post in posts"
+                type="item-text-wrap" href="#/tab/post/{{post.id}}">
+        <h2>{{post.id}}</h2>
+        <p>{{post.message}}</p>
+
+            <i class="icon ion-chevron-right icon-accessory"></i>
+        
+
+        <ion-option-button class="button-assertive"
+            ng-click="removeEntry($index)">Delete
+        </ion-option-button>
+        <ion-delete-button class="item-edit"
+            ng-click="toggleEntrySelected(entry)"
+            ng-class="{'ion-ios-circle-outline': !entry.selected, 'ion-ios-checkmark': entry.selected}">
+        </ion-delete-button>
+        <ion-reorder-button class="ion-navicon"
+            on-reorder="reorderItem($fromIndex, $toIndex)"></ion-reorder-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

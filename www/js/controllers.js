@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
       cancelText: '取消',
       cancel: function(){},
       buttonClicked: function(index){
-        console.log(index);
+        //console.log(index);
         return true;
       },
       destructiveButtonClicked: function(){
@@ -45,6 +45,12 @@ angular.module('starter.controllers', [])
       }
     })
   }
+
+})
+.controller('PostsCtrl',function($scope,Posts){
+  $scope.posts = Posts.all();
+})
+.controller('BBCCtrl',function($scope){
 
 })
 
@@ -89,13 +95,13 @@ angular.module('starter.controllers', [])
       if($scope.editing) {
           $scope.toggleEntrySelected(entry);
       }
-      console.log("entry clicked", entry);
+      //console.log("entry clicked", entry);
   }
 
 
   $scope.doAddEntry = function(id){
     $scope.adding = true;
-    console.log("adding: ", id)
+    //console.log("adding: ", id)
     if(typeof(id)!=='undefined' && id !== null && id != ''){
       Entries.add(id)
         .then(function(){
