@@ -89,7 +89,7 @@ angular.module('starter.services', [])
         entries.splice(index,1);
     },
     refresh: function(){
-        return $http.get("/api/entry/query/"+entrylist.join(","))
+        return $http.get("/EntryQuery/api/entry/query/"+entrylist.join(","))
                     .then(function(res){
                         var ret = res.data;
                         if(ret.code == "200") {
@@ -121,7 +121,7 @@ angular.module('starter.services', [])
     },
     add: function(id){
         return $q(function(resolve,reject){
-            $http.get("/api/entry/query/"+id).then(function(res){
+            $http.get("/EntryQuery/api/entry/query/"+id).then(function(res){
                 //console.log(res);
             var ret = res.data;
             var i,d,e;

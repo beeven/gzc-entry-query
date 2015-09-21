@@ -4,7 +4,7 @@ var express = require("express"),
 
 app.use(express.static(__dirname+"/www"));
 
-app.get("/api/entry/query/:ids",function(req,res){
+app.get("/EntryQuery/api/entry/query/:ids",function(req,res){
     var ids = req.params.ids;
    if(/[^\d,]+/.test(ids)){
        res.json({code:300,status:"Illegal character detected in id."});
