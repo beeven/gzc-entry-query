@@ -12,16 +12,16 @@ app.get("/api/entry/query/:ids",function(req,res){
        return;
    }
 
-   var req = http.get("http://10.53.1.181:3000/entry_pop/api/entry/query/" + ids,function(res){
+   var request = http.get("http://10.53.1.181:3000/entry_pop/api/entry/" + ids,function(response){
      var data="";
-     res.on('data',function(chunk){
+     response.on('data',function(chunk){
        data += chunk;
      });
-     res.on('end',function(){
+     response.on('end',function(){
        res.json(JSON.parse(data.toString()));
      })
    });
-   req.on('error',function(err){
+   request.on('error',function(err){
      res.status(500);
      console.log(err);
    });
