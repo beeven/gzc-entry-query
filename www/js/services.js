@@ -105,7 +105,10 @@ angular.module('starter.services', [])
                               }
                               storage["entry." + i] = JSON.stringify(e);
                               ei = entrylist.indexOf(i);
-                              entries[ei] = e;
+                              entries[ei].status = d.status;
+                              entries[ei].message = d.message;
+                              entries[ei].declare_date = d.declare_date;
+                              entries[ei].trade_name = d.trade_name;
                           }
                         }
                     },function(res){
