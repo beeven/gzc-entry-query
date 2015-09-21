@@ -1,0 +1,26 @@
+<ion-view view-title="报关单详情">
+  <ion-content class="padding">
+    <ion-list>
+      <ion-item class="item">
+        <h2>报关单号</h2>
+        <span>{{entry.id}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>货主单位</h2>
+        <span>{{entry.trade_name}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>申报日期</h2>
+        <span>{{entry.declare_date | date:'yyyy-MM-dd'}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>处理状态</h2>
+        <span>{{entry.status}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>海关提示</h2>
+        <span>{{entry.message}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

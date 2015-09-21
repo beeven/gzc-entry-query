@@ -54,6 +54,7 @@ angular.module('starter.services', [])
         storage = window.localStorage;
     } else {
         storage = {};
+        storage.clear = function(){storage={}};
     }
 
     var entrylist = storage["entries"];
@@ -78,6 +79,10 @@ angular.module('starter.services', [])
         //console.log(entrylist,entries);
       return entries;
     },
+    get: function(id){
+      //console.log(id);
+      return entries[entrylist.indexOf(id)];
+    },
     removeAt: function(index){
         entrylist.splice(index,1);
         storage["entries"] = JSON.stringify(entrylist);
@@ -87,10 +92,24 @@ angular.module('starter.services', [])
         return $http.get("/api/entry/query/"+entrylist.join(","))
                     .then(function(res){
                         var ret = res.data;
-                        var i,e;
-                        for(i in ret.data) {
-                            e = ret.data[i];
+                        if(ret.code == "200") {
+                          var i,d,e,ei;
+                          for(i in ret.data) {
+                              d = ret.data[i];
+                              e = {
+                                id:i,
+                                status: d.status,
+                                message: d.message,
+                                declare_date: d.declare_date,
+                                trade_name: d.trade_name
+                              }
+                              storage["entry." + i] = JSON.stringify(e);
+                              ei = entrylist.indexOf(i);
+                              entries[ei] = e;
+                          }
                         }
+                    },function(res){
+                      console.log("err:",res);
                     })
     },
     reorder: function(fromIndex, toIndex){
@@ -103,10 +122,14 @@ angular.module('starter.services', [])
     add: function(id){
         return $q(function(resolve,reject){
             $http.get("/api/entry/query/"+id).then(function(res){
-                console.log(res);
+                //console.log(res);
             var ret = res.data;
             var i,d,e;
-            if(ret.code == '200'){ // found 
+            if(ret.code == '200'){ // found
+              if(ret.count == 0){
+                 reject({message: "没有找到报关单信息"});
+                 return;
+              }
                 for(i in ret.data){
                     d = ret.data[i];
                     e = {
@@ -123,9 +146,6 @@ angular.module('starter.services', [])
                 storage["entries"] = JSON.stringify(entrylist);
                 resolve(e);
             }
-            else if (ret.code == '404') { // not found
-                reject({message:"没有此报关单信息"});
-            }
             else {
                 reject({message: ret.status});
             }
@@ -133,6 +153,11 @@ angular.module('starter.services', [])
             reject({message:"无法联系服务器"});
             console.log(err);
         })});
+    },
+    clear: function(){
+      entrylist=[];
+      entries.splice(0,entries.length);
+      storage.clear();
     }
   }
 });

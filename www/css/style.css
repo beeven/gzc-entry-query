@@ -15,3 +15,12 @@
 .modal .status-text {
     text-align: center;
 }
+
+.item-icon-right span.icon {
+  font-size: 16px;
+
+}
+
+.item-icon-right span.icon i.icon{
+  position: relative;
+}

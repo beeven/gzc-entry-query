@@ -18,10 +18,11 @@ app.get("/api/entry/query/:ids",function(req,res){
    var ret = {}
    var i=0,id;
    for(i=0;i<idArray.length;i++){
-       
+
        id = idArray[i];
        if(id == 1){
-           res.json({code:"404",data:{}});
+           res.json({code:"200",count:0,data:{}});
+           console.log("count:0, data:{}");
            return;
        }
        ret[id] = {
@@ -30,7 +31,8 @@ app.get("/api/entry/query/:ids",function(req,res){
                "message":"通关无纸化审结",
                "declare_date":"2015-06-24T14:19:51.000Z"}
        }
-    res.json({code:"200",data:ret});
+    res.json({code:"200",count:i, data:ret});
+    console.log("count: %d, data:%s",i, ret);
 });
 
 

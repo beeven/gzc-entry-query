@@ -20,27 +20,48 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
+.controller('EntryDetailCtrl',function($scope,$stateParams, Entries){
+  $scope.entry = Entries.get($stateParams.entryId);
+})
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, $ionicActionSheet, Entries) {
   $scope.settings = {
     enableFriends: true
   };
+  $scope.clearStorage = function(){
+    var hideSheet = $ionicActionSheet.show({
+      buttons:[],
+      destructiveText: '清空存储',
+      titleText: '清除所有缓存内容',
+      cancelText: '取消',
+      cancel: function(){},
+      buttonClicked: function(index){
+        console.log(index);
+        return true;
+      },
+      destructiveButtonClicked: function(){
+        Entries.clear();
+        return true;
+      }
+    })
+  }
+
 })
 
 .controller('EntriesCtrl', function($scope,Entries,$timeout,$ionicModal){
   $scope.shouldShowDelete = false;
-  $scope.editButtonText = 'Edit';
+  $scope.editButtonText = '编辑';
   $scope.adding = false;
 
   $scope.toggleDelete = function(){
     $scope.editing = !$scope.editing;
-    $scope.editButtonText = $scope.editing ? 'Done' : 'Edit';
+    $scope.editButtonText = $scope.editing ? '取消' : '编辑';
   }
   $scope.entries = Entries.all();
   $scope.doRefresh = function(){
-    $timeout(function(){
+    Entries.refresh().then(function(){
       $scope.$broadcast('scroll.refreshComplete');
-    },1000)
+    });
   }
   $ionicModal.fromTemplateUrl('templates/add-entry-modal.html',{
     scope: $scope,
@@ -59,6 +80,7 @@ angular.module('starter.controllers', [])
               }
           }
       } else { // add new entry
+          $scope.newEntry = "";
           $scope.modal.show();
       }
   };
