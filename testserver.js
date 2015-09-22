@@ -1,8 +1,10 @@
 var express = require("express"),
-    app = express();
+    app = express(),
+    compress = require("compression");
 
-
+app.use(compress());
 app.use(express.static(__dirname+"/www"));
+
 
 app.get("/EntryQuery/api/entry/query/:ids",function(req,res){
     var ids = req.params.ids;

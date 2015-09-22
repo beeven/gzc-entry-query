@@ -59,11 +59,24 @@ angular.module('starter.controllers', [])
   $scope.editButtonText = '编辑';
   $scope.adding = false;
 
+  $scope.shoudShowHints = true;
+  $scope.entries = [];
+
+  $scope.$watch('entries.length == 0',function(newValue, oldValue){
+    if(newValue) {
+      $scope.shouldShowHints = true;
+    } else {
+      $scope.shouldShowHints = false;
+    }
+  });
+
+  $scope.entries = Entries.all();
+
   $scope.toggleDelete = function(){
     $scope.editing = !$scope.editing;
     $scope.editButtonText = $scope.editing ? '取消' : '编辑';
   }
-  $scope.entries = Entries.all();
+
   $scope.doRefresh = function(){
     Entries.refresh().then(function(){
       $scope.$broadcast('scroll.refreshComplete');

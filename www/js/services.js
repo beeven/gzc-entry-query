@@ -45,28 +45,98 @@ angular.module('starter.services', [])
         }
       }
       return null;
+    },
+    clear: function(){
+
     }
   };
 })
 .factory("Posts",function($q,$http){
-  var posts = [{
-    id: "55123559120",
-    i_e_flag: "进口",
-    country: "US",
-    lastUpdated: new Date(),
-    tax: "￥10.50",
-    message: "已放行",
-  },{
-    id: "5BX23559LL20",
-    message: "无此邮件信息"
-  },{
-    id: "55GSS123559120",
-    message: "无此邮件信息"
-  }];
+  var storage;
+  if(window.localStorage !== null) {
+      storage = window.localStorage;
+  } else {
+      storage = {};
+      storage.clear = function(){storage={}};
+  }
+  var postlist = storage["posts"];
+  if(typeof(postlist) === 'undefined' || postlist === null || postlist === "") {
+      storage["posts"] = "[]";
+      postlist = [];
+  } else {
+      postlist = JSON.parse(postlist);
+  }
+
+  var i=0,posts=[],post;
+  for(i=0;i<postlist.length;i++){
+    post = storage["post."+postlist[i]];
+    if(typeof(post) === 'undefined' || post == null){
+      continue;
+    }
+    posts.push(JSON.parse(post));
+  }
+
   return {
     all: function(){
       return posts;
+    },
+    get: function(id){
+      return posts[postlist.indexOf(id)];
+    },
+    removeAt: function(index){
+      postlist.splice(index,1);
+      storage["posts"] = JSON.stringify(postlist);
+      posts.splice(index,1);
+    },
+    clear: function(){
+      postlist=[];
+      posts.splice(0,posts.length);
+      storage.clear();
+    },
+    reorder: function(fromIndex, toIndex){
+        var e = posts.splice(fromIndex,1);
+        posts.splice(toIndex,0,e[0]);
+        e = postlist.splice(fromIndex,1);
+        postlist.splice(toIndex,0,e[0]);
+        storage["posts"] = JSON.stringify(postlist);
+    },
+    add:  function(id){
+      return $q(function(resolve,reject){
+          $http.get("/EntryQuery/api/post/query/"+id).then(function(res){
+              //console.log(res);
+          var ret = res.data;
+          var i,d,e;
+          if(ret.code == '200'){ // found
+            if(ret.count == 0){
+               reject({message: "没有找到邮件信息"});
+               return;
+            }
+              for(i in ret.data){
+                  d = ret.data[i];
+                  e = {
+                      id: i,
+                      country: d.country,
+                      content: d.content,
+                      flag : d.flag,
+                      date: d.date,
+                      amount: d.amount
+                  };
+                  posts.push(e);
+                  postlist.push(i);
+                  storage["post."+i] = JSON.stringify(e);
+              }
+              storage["posts"] = JSON.stringify(postlist);
+              resolve(e);
+          }
+          else {
+              reject({message: ret.status});
+          }
+      },function(err){
+          reject({message:"无法联系服务器"});
+          console.log(err);
+      })});
     }
+
   }
 })
 .factory('Entries',function($q,$http){
@@ -89,7 +159,7 @@ angular.module('starter.services', [])
     var i=0,entries=[],entry;
 
     for(i=0;i<entrylist.length;i++){
-        entry= localStorage["entry." + entrylist[i]];
+        entry= storage["entry." + entrylist[i]];
         if(typeof(entry) === 'undefined' || entry === null)
             continue;
         entries.push(JSON.parse(entry));
@@ -97,11 +167,9 @@ angular.module('starter.services', [])
 
   return {
     all: function(){
-        //console.log(entrylist,entries);
       return entries;
     },
     get: function(id){
-      //console.log(id);
       return entries[entrylist.indexOf(id)];
     },
     removeAt: function(index){

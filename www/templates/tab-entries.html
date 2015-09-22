@@ -11,6 +11,9 @@
             ng-class="{'ion-ios-plus-empty': !editing, 'ion-ios-trash-outline': editing}">
     </button>
   </ion-nav-buttons>
+  <div class="hints" ng-show="shouldShowHints">
+    <span>点击右上角"+"添加关注报关单</span>
+  </div>
   <ion-content>
     <ion-refresher pulling-text="下拉以更新列表..."
       on-refresh="doRefresh()"></ion-refresher>
@@ -38,5 +41,6 @@
             on-reorder="reorderItem($fromIndex, $toIndex)"></ion-reorder-button>
       </ion-item>
     </ion-list>
+
   </ion-content>
 </ion-view>
