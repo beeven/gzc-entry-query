@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
 
   $ionicConfigProvider.navBar.alignTitle('center');
   $ionicConfigProvider.navBar.positionPrimaryButtons('left');
