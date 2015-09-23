@@ -9,8 +9,14 @@ html,body {
 body {
   display:flex;
   display: -webkit-flex;
-  flex-direction: column;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
   -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
   height:100%;
 }
 
@@ -50,10 +56,19 @@ body {
   color: rgb(172, 172, 172);
   display: flex;
   display: -webkit-flex;
+  display: -moz-flex;
+  display: -o-flex;
+  display: -ms-flex;
   align-items: center;
   -webkit-align-items: center;
+  -moz-align-item: center;
+  -o-align-item: center;
+  -ms-align-item: center;
   justify-content: center;
   -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-align-item: center;
+  -o-align-item: center;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -63,11 +78,17 @@ body {
 .banner {
   flex:initial;
   -webkit-flex: initial;
+  -moz-flex: initial;
+  -ms-flex: initial;
+  -o-flex: initial;
 }
 
 .main-content {
   flex:1;
   -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  -o-flex: 1;
   position:relative;
 }
 

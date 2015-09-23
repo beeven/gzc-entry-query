@@ -30,6 +30,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $ionicConfigProvider.tabs.position('bottom');
   $ionicConfigProvider.tabs.style('standard');
   $ionicConfigProvider.form.toggle('large');
+  $ionicConfigProvider.form.checkbox('circle');
+  $ionicConfigProvider.spinner.icon('ios');
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
