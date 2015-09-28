@@ -31,8 +31,15 @@
 }
 
 .view-container .hints {
+    display: -webkit-box;
+    display: box;
+    -webkit-box-pack: center;
+    box-pack: center;
+    -webkit-box-align: center;
+    box-align: center;
   font-size: 18px;
   color: rgb(172, 172, 172);
+  display: -webkit-flex;
   display: flex;
   align-items: center;
   justify-content: center;
