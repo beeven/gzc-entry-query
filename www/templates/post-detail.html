@@ -1,0 +1,30 @@
+<ion-view view-title="邮递物品详情">
+  <ion-content class="padding">
+    <ion-list>
+      <ion-item class="item">
+        <h2>邮件号</h2>
+        <span>{{post.id}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>国别</h2>
+        <span>{{post.country}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>主要物品</h2>
+        <span>{{post.content}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>进出口标志</h2>
+        <span>{{post.flag}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>申报日期</h2>
+        <span>{{post.date | date: 'yyyy-MM-dd'}}</span>
+      </ion-item>
+      <ion-item>
+        <h2>税额</h2>
+        <span>{{post.amount | currency: '￥'}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

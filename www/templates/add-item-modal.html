@@ -1,0 +1,20 @@
+<ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">{{modalConfig.title}}</h1>
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">{{modalConfig.label}}</span>
+          <input type="text" ng-model="newItem" />
+        </label>
+      </div>
+      <div class="status-text">
+          <h5 class="assertive">{{modalConfig.status}}</h5>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-positive" ng-disabled="adding" ng-click="doAddItem(newItem)">确认</button>
+        <button class="button button-block button-assertive" ng-Click="cancelAddItem()">取消</button>
+      </div>
+    </ion-content>
+</ion-modal-view>

@@ -47,7 +47,6 @@ angular.module('starter.services', [])
       return null;
     },
     clear: function(){
-
     }
   };
 })
@@ -135,9 +134,37 @@ angular.module('starter.services', [])
           reject({message:"无法联系服务器"});
           console.log(err);
       })});
-    }
-
-  }
+    },
+    refresh: function() {
+      return $http.get("/EntryQuery/api/post/query/"+postlist.join(","))
+                .then(function(res){
+                    var ret = res.data;
+                    if(ret.code == "200") {
+                      var i,d,e,ei;
+                      for(i in ret.data) {
+                          d = ret.data[i];
+                          e = {
+                              id: i,
+                              country: d.country,
+                              content: d.content,
+                              flag : d.flag,
+                              date: d.date,
+                              amount: d.amount
+                          };
+                          storage["post." + i] = JSON.stringify(e);
+                          ei = postlist.indexOf(i);
+                          posts[ei].country = d.country;
+                          posts[ei].content = d.content;
+                          posts[ei].flag = d.flag;
+                          posts[ei].date = d.date;
+                          posts[ei].amount = d.amount;
+                      }
+                    }
+                },function(res){
+                  console.log("err:",res);
+                })
+      }
+    };
 })
 .factory('Entries',function($q,$http){
     var storage;

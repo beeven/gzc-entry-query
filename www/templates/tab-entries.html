@@ -24,17 +24,16 @@
                 ng-repeat="entry in entries"
                 type="item-text-wrap" href="#/tab/entry/{{entry.id}}">
         <h2>{{entry.id}}</h2>
-        <p>{{entry.status}}</p>
+        <p>{{entry.trade_name}}</p>
         <span class="icon status-text icon-accessory">
-
+          {{entry.status}}
             <i class="icon ion-chevron-right icon-accessory"></i>
         </span>
-
         <ion-option-button class="button-assertive"
-            ng-click="removeEntry($index)">Delete
+            ng-click="removeItem($index)">删除
         </ion-option-button>
         <ion-delete-button class="item-edit"
-            ng-click="toggleEntrySelected(entry)"
+            ng-click="toggleItemSelected(entry)"
             ng-class="{'ion-ios-circle-outline': !entry.selected, 'ion-ios-checkmark': entry.selected}">
         </ion-delete-button>
         <ion-reorder-button class="ion-navicon"

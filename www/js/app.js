@@ -113,6 +113,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
+  .state('tab.post-detail',{
+    url:'/post/:postId',
+    views: {
+      'tab-posts': {
+        templateUrl: 'templates/post-detail.html',
+        controller:'PostDetailCtrl'
+      }
+    }
+  })
   .state('tab.bbc',{
     url: '/bbc',
     views: {
