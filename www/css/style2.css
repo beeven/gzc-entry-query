@@ -13,17 +13,17 @@ body {
   box-orient: vertical;
 
 
-  display: -webkit-flexbox;
+  /*display: -webkit-flexbox;
   display: flex-box;
   -webkit-flex-direction: column;
-  flex-direction: column;
+  flex-direction: column;*/
 
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  
+
   -webkit-flex-direction: column;
   -moz-flex-direction: column;
   -ms-flex-direction: column;
@@ -74,14 +74,14 @@ body {
   -webkit-box-align: center;
   box-align: center;
 
-  display: -webkit-flexbox;
+  /*display: -webkit-flexbox;
   display: flexbox;
   -webkit-flex-pack: center;
   flex-pack: center;
   -webkit-flex-align: center;
   flex-align: center;
   -webkit-flex-item-align:center;
-  flex-item-align: center;
+  flex-item-align: center;*/
 
   display: -webkit-flex;
   display: -moz-flex;
@@ -119,7 +119,7 @@ body {
 .main-content {
   -webkit-box-flex: 1;
   box-flex: 1;
-  
+
   -webkit-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
