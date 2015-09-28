@@ -7,11 +7,23 @@ html,body {
 }
 
 body {
-  display:flex;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+
+
+  display: -webkit-flexbox;
+  display: flex-box;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
+  display: flex;
+  
   -webkit-flex-direction: column;
   -moz-flex-direction: column;
   -ms-flex-direction: column;
@@ -54,11 +66,29 @@ body {
 .view-container .hints {
   font-size: 18px;
   color: rgb(172, 172, 172);
-  display: flex;
+
+  display: -webkit-box;
+  display: box;
+  -webkit-box-pack: center;
+  box-pack: center;
+  -webkit-box-align: center;
+  box-align: center;
+
+  display: -webkit-flexbox;
+  display: flexbox;
+  -webkit-flex-pack: center;
+  flex-pack: center;
+  -webkit-flex-align: center;
+  flex-align: center;
+  -webkit-flex-item-align:center;
+  flex-item-align: center;
+
   display: -webkit-flex;
   display: -moz-flex;
   display: -o-flex;
   display: -ms-flex;
+  display: flex;
+
   align-items: center;
   -webkit-align-items: center;
   -moz-align-item: center;
@@ -76,19 +106,25 @@ body {
 }
 
 .banner {
-  flex:initial;
+  -webkit-box-flex: 0;
+  box-flex: 0;
+
   -webkit-flex: initial;
   -moz-flex: initial;
   -ms-flex: initial;
   -o-flex: initial;
+  flex:initial;
 }
 
 .main-content {
-  flex:1;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  
   -webkit-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
   -o-flex: 1;
+  flex:1;
   position:relative;
 }
 
